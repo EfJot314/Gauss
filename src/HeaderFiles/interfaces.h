@@ -15,8 +15,9 @@ class Matrix{
         int getSizeX();
         int getSizeY();
         float getValue(int i, int j);
-        float getDet(char method);  //g - Gauss OR d - definition
+        Matrix* getTransposedMatrix();
         void show(std::string description);
+        float getDet(char method);  //g - Gauss OR d - definition
 };
 
 

@@ -6,9 +6,9 @@ Matrix::Matrix(){};
 Matrix::Matrix(int nx, int ny){
     this->nx = nx;
     this->ny = ny;
-    tab = (float**)malloc(nx*sizeof(float*));
-    for(int i=0;i<nx;i++)
-        tab[i] = (float*)calloc(ny, sizeof(float));
+    tab = (float**)malloc(ny*sizeof(float*));
+    for(int i=0;i<ny;i++)
+        tab[i] = (float*)calloc(nx, sizeof(float));
 };
 
 Matrix::~Matrix(){
@@ -51,6 +51,16 @@ void Matrix::show(std::string description){
         printf("|\n");
     }
     printf("\n");
+};
+
+Matrix* Matrix::getTransposedMatrix(){
+    Matrix* matrix = new Matrix(ny, nx);
+    for(int i=0;i<ny;i++){
+        for(int j=0;j<nx;j++){
+            matrix->setValue(j, i, tab[i][j]);
+        }
+    }
+    return matrix;
 };
 
 float Matrix::getDet(char method){

@@ -37,6 +37,10 @@ int main()
 
     v->show("Input vector:");
 
+    v = v->getTransposedMatrix();
+    v->show("Transposed vector:");
+
+
 
 
 

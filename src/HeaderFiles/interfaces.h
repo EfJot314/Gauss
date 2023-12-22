@@ -13,19 +13,18 @@ class InputParser{
         void freeMemory();
 };
 
-class Solver{
+class Matrix{
     private:
-        InputParser ip;
-        std::string word;
+        int n;
+        float** tab;
     public:
-        Solver();
-        Solver(InputParser ip, std::string word);
-        ~Solver();
-        Relations* createDependencies();
-        Relations* createIndependecies();
-        Graph* createGraph(Relations* D);
-        std::string createFNF(Graph* g);
+        Matrix();
+        Matrix(int n);
+        ~Matrix();
+        void setValue(int i, int j, float value);
+        float getValue(int i, int j);
 };
+
 
 
 

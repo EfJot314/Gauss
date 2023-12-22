@@ -1,29 +1,41 @@
 #include "graphDependencies.h"
 
+
+
+class Matrix{
+    private:
+        int nx;
+        int ny;
+        float** tab;
+    public:
+        Matrix();
+        Matrix(int nx, int ny);
+        ~Matrix();
+        void setValue(int i, int j, float value);
+        int getSizeX();
+        int getSizeY();
+        float getValue(int i, int j);
+        float getDet(char method);  //g - Gauss OR d - definition
+        void show();
+};
+
+
+
 class InputParser{
     private:
-        int n;
-        Action* actions;
+        int nx;
+        int ny;
+        Matrix* matrix;
     public:
         InputParser();
         ~InputParser();
-        void parse(std::string line);
-        int getNoActions();
-        Action getAction(int id);
-        void freeMemory();
+        void createNewMatrix(int x, int y);
+        void setRow(int i, std::string line);
+        Matrix* getMatrix();
 };
 
-class SqMatrix{
-    private:
-        int n;
-        float** tab;
-    public:
-        SqMatrix();
-        SqMatrix(int n);
-        ~SqMatrix();
-        void setValue(int i, int j, float value);
-        float getValue(int i, int j);
-};
+
+
 
 
 

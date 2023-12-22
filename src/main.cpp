@@ -11,11 +11,25 @@ int main()
         return 1;
     }
 
-    //getting word
-    string word;
-    getline(file, word);
+    //get data
+    string line;
 
-    
+    //matrix size
+    getline(file, line);
+    int n = stof(line);
+
+    //reading matrix
+    InputParser ip;
+    ip.createNewMatrix(n, n);
+    for(int i=0;i<n;i++){
+        getline(file, line);
+        ip.setRow(i, line);
+    }
+    Matrix* m = ip.getMatrix();
+
+    m->show();
+
+    float v = m->getDet('d');
 
 
 

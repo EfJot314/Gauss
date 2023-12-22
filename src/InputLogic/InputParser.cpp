@@ -1,44 +1,34 @@
 #include "../HeaderFiles/interfaces.h"
 
 
-InputParser::InputParser(){
-    n = 0;
-    actions = (Action*)calloc(maxNoActions, sizeof(Action));
-};
+using namespace std;
+
+
+InputParser::InputParser(){};
 
 InputParser::~InputParser(){};
 
-void InputParser::freeMemory(){
-    free(actions);
+void InputParser::createNewMatrix(int x, int y){
+    nx = x;
+    ny = y;
+    matrix = new Matrix(nx, ny);
 };
 
-void InputParser::parse(std::string line){
-    //remove all what is not a letter
-    std::string newLine = "";
-    for(char c : line){
-        if((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')){
-            newLine += c;
-        }
+void InputParser::setRow(int i, string line){
+    //validation
+    if(i < 0 || i >= ny){
+        cerr<<"InputParser::setRow() => Wrong row index."<<endl;
+        return;
     }
-    //create new action
-    Action a;
-    a.id = newLine[0];
-    a.variable = newLine[1];
-    a.dependencies = (char*)calloc(newLine.length()-2, sizeof(char));
-    a.nOfDependencies = newLine.length()-2;
-    for(int i=2;i<newLine.length();i++){
-        a.dependencies[i-2] = newLine[i];
+
+    istringstream iss(line);
+    float value;
+    for(int j=0;j<nx;j++){
+        iss >> value;
+        matrix->setValue(j, i, value);
     }
-    //add new action to array and increment n
-    actions[n] = a;
-    n++;
 };
 
-int InputParser::getNoActions(){
-    return n;
+Matrix* InputParser::getMatrix(){
+    return matrix;
 };
-
-Action InputParser::getAction(int id){
-    return actions[id];
-}
-

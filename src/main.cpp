@@ -27,9 +27,21 @@ int main()
     }
     Matrix* m = ip.getMatrix();
 
-    m->show();
+    m->show("Input matrix:");
 
-    float v = m->getDet('d');
+    //reading vector
+    ip.createNewMatrix(n, 1);
+    getline(file, line);
+    ip.setRow(0, line);
+    Matrix* v = ip.getMatrix();
+
+    v->show("Input vector:");
+
+
+
+
+
+    float d = m->getDet('d');
 
 
 

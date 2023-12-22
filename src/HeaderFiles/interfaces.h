@@ -16,7 +16,7 @@ class Matrix{
         int getSizeY();
         float getValue(int i, int j);
         float getDet(char method);  //g - Gauss OR d - definition
-        void show();
+        void show(std::string description);
 };
 
 

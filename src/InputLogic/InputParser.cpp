@@ -25,7 +25,7 @@ void InputParser::setRow(int i, string line){
     float value;
     for(int j=0;j<nx;j++){
         iss >> value;
-        matrix->setValue(j, i, value);
+        matrix->setValue(i, j, value);
     }
 };
 

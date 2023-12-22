@@ -20,17 +20,17 @@ Matrix::~Matrix(){
 };
 
 void Matrix::setValue(int i, int j, float value){
-    if(i >=0 && i < nx && j >= 0 && j < ny)
+    if(i >=0 && i < ny && j >= 0 && j < nx)
         tab[i][j] = value;
     else    
-        std::cerr<<"Invalid index."<<std::endl;
+        std::cerr<<"Matrix::setValue() => Invalid index."<<std::endl;
 };
 
 float Matrix::getValue(int i, int j){
-    if(i >=0 && i < nx && j >= 0 && j < ny)
+    if(i >=0 && i < ny && j >= 0 && j < nx)
         return tab[i][j];
     else    
-        std::cerr<<"Invalid index."<<std::endl;
+        std::cerr<<"Matrix::getValue() => Invalid index."<<std::endl;
 };
 
 int Matrix::getSizeX(){
@@ -41,12 +41,12 @@ int Matrix::getSizeY(){
     return ny;
 };
 
-void Matrix::show(){
-    printf("\n");
-    for(int i=0;i<nx;i++){
+void Matrix::show(std::string description){
+    std::cout<<description<<std::endl;
+    for(int i=0;i<ny;i++){
         printf("| ");
-        for(int j=0;j<ny;j++){
-            printf("%.2f\t", tab[j][i]);
+        for(int j=0;j<nx;j++){
+            printf("%.2f\t", tab[i][j]);
         }
         printf("|\n");
     }

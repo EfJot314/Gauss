@@ -1,4 +1,4 @@
-#include "graphClasses.h"
+#include "graphDependencies.h"
 
 class InputParser{
     private:

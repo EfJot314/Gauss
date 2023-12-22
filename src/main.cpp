@@ -43,7 +43,16 @@ int main()
 
 
     float d = m->getDet('d');
-    cout << d << endl;
+    cout << "Definition det: " << d << endl;
+
+    Gauss g(m, v);
+    g.classicElimination();
+
+    m->show("Matrix after elimination:");
+    v->show("Vector after elimination:");
+
+    d = m->getDet('g');
+    cout << "Gauss det: " << d << endl;
 
 
 

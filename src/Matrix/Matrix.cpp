@@ -26,6 +26,14 @@ void Matrix::setValue(int i, int j, float value){
         std::cerr<<"Matrix::setValue() => Invalid index."<<std::endl;
 };
 
+void Matrix::subtractRowsWithMultiplicator(int i1, int i2, float value){
+    if(i1 < 0 || i1 >= ny || i2 < 0 || i2 >= ny)
+        std::cerr<<"Matrix::subtractRows() => Invalid index."<<std::endl;
+    else    
+        for(int j=0;j<nx;j++)
+            tab[i2][j] -= tab[i1][j] * value;
+};
+
 float Matrix::getValue(int i, int j){
     if(i >=0 && i < ny && j >= 0 && j < nx)
         return tab[i][j];
@@ -99,7 +107,12 @@ float Matrix::getDet(char method){
 
     //Gauss
     if(method == 'g'){
-        
+        d = 1.0f;
+        Gauss g(this);
+        g.classicElimination();
+        for(int i=0;i<nx;i++)
+            d *= tab[i][i];
+
     }
 
     //definition
@@ -117,6 +130,8 @@ float Matrix::getDet(char method){
         std::cerr<<"Matrix::getDet() => Argument method = '"<<method<<"' is invalid, use 'g' or 'd'."<<std::endl;
         return NULL;
     }
+
+    //return value
     return d;
 };
 

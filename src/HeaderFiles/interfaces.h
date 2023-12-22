@@ -13,6 +13,7 @@ class Matrix{
         Matrix(int nx, int ny);
         ~Matrix();
         void setValue(int i, int j, float value);
+        void subtractRowsWithMultiplicator(int , int j, float value);
         int getSizeX();
         int getSizeY();
         float getValue(int i, int j);
@@ -36,9 +37,20 @@ class InputParser{
         Matrix* getMatrix();
 };
 
+class Gauss{
+    private:
+        Matrix* m;
+        Matrix* v;
+    public:
+        Gauss();
+        Gauss(Matrix* matrix);
+        Gauss(Matrix* matrix, Matrix* vector);
+        ~Gauss();
+        void classicElimination();
+        void threadElimination();
+        Matrix* getMatrix();
+        Matrix* getVector();
 
-
-
-
+};
 
 

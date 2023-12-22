@@ -28,7 +28,7 @@ void Matrix::setValue(int i, int j, float value){
 
 void Matrix::subtractRowsWithMultiplicator(int i1, int i2, float value){
     if(i1 < 0 || i1 >= ny || i2 < 0 || i2 >= ny)
-        std::cerr<<"Matrix::subtractRows() => Invalid index."<<std::endl;
+        std::cerr<<"Matrix::subtractRowsWithMultiplicator() => Invalid index."<<std::endl;
     else    
         for(int j=0;j<nx;j++)
             tab[i2][j] -= tab[i1][j] * value;
@@ -69,6 +69,36 @@ Matrix* Matrix::getTransposedMatrix(){
         }
     }
     return matrix;
+};
+
+Matrix* Matrix::addColumns(Matrix* v){
+    //validation
+    if(v->getSizeY() != ny){
+        std::cerr<<"Matrix::subtractRowsWithMultiplicator() => Invalid index."<<std::endl;
+        return NULL;
+    }
+
+    int dx = v->getSizeX();
+
+    Matrix* nm = new Matrix(nx+dx, ny);
+    for(int i=0;i<ny;i++){
+        for(int j=0;j<nx;j++){
+            nm->setValue(i, j, tab[i][j]);
+        }
+        for(int j=0;j<dx;j++){
+            nm->setValue(i, nx+j, v->getValue(i, j));
+        }
+    }
+
+    return nm;
+};
+
+Matrix* Matrix::getLastColumn(){
+    Matrix* v = new Matrix(1, ny);
+    for(int i=0;i<ny;i++){
+        v->setValue(i, 0, tab[i][ny-1]);
+    }
+    return v;
 };
 
 Matrix* Matrix::getMatrixWithout(int ii, int ij){

@@ -1,22 +1,30 @@
+#include <thread>
+
 #include "../HeaderFiles/interfaces.h"
 
 
+
 Gauss::Gauss(){
-    m = NULL;
     v = NULL;
+    m = NULL;
 };
 
 Gauss::Gauss(Matrix* matrix){
-    m = matrix;
     v = NULL;
+    m = matrix;
 };
 
 Gauss::Gauss(Matrix* matrix, Matrix* vector){
-    m = matrix;
     v = vector;
+    //add vector to matrix
+    m = matrix->addColumns(v);
 };
 
 Gauss::~Gauss(){};
+
+float Gauss::findMultiplicator(int i1, int i2){
+    return m->getValue(i1, i1) / m->getValue(i2, i1);
+};
 
 void Gauss::classicElimination(){
     int ny = m->getSizeY();
@@ -24,7 +32,7 @@ void Gauss::classicElimination(){
         if(m->getValue(i1, i1) == 0)
             continue;
         for(int i2=i1+1;i2<ny;i2++){
-            float multiplicator = m->getValue(i2, i1) / m->getValue(i1, i1);
+            float multiplicator = 1 / findMultiplicator(i1, i2);
             m->subtractRowsWithMultiplicator(i1, i2, multiplicator);
             //if vector is also given
             if(v != NULL){
@@ -44,6 +52,7 @@ Matrix* Gauss::getMatrix(){
 };
 
 Matrix* Gauss::getVector(){
+    v = m->getLastColumn();
     return v;
 };
 

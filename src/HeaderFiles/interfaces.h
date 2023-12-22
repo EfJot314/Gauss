@@ -13,14 +13,14 @@ class InputParser{
         void freeMemory();
 };
 
-class Matrix{
+class SqMatrix{
     private:
         int n;
         float** tab;
     public:
-        Matrix();
-        Matrix(int n);
-        ~Matrix();
+        SqMatrix();
+        SqMatrix(int n);
+        ~SqMatrix();
         void setValue(int i, int j, float value);
         float getValue(int i, int j);
 };

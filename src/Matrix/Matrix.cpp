@@ -35,6 +35,7 @@ void Matrix::subtractRowsWithMultiplicator(int i1, int i2, float value){
 };
 
 float Matrix::getValue(int i, int j){
+    return tab[i][j];
     if(i >=0 && i < ny && j >= 0 && j < nx)
         return tab[i][j];
     else    

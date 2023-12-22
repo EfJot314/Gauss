@@ -46,12 +46,13 @@ int main()
     cout << "Definition det: " << d << endl;
 
     Gauss g(m, v);
-    g.classicElimination();
+    // g.classicElimination();
+    g.threadElimination();
 
     m->show("Matrix after elimination:");
     v->show("Vector after elimination:");
 
-    d = m->getDet('g');
+    d = m->getDet('d');
     cout << "Gauss det: " << d << endl;
 
 

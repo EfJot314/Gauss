@@ -30,9 +30,6 @@ class Gauss{
     private:
         Matrix* m;
         Matrix* v;
-        float findMultiplicator(int i1, int i2);
-        float multiplicateElement(int i, int j, float value);
-        void subtractElements(int i1, int i2, int j);
     public:
         Gauss();
         Gauss(Matrix* matrix);

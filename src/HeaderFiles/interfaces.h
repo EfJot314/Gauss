@@ -7,6 +7,7 @@ class Matrix{
         int nx;
         int ny;
         float** tab;
+        Matrix* getMatrixWithout(int ii, int ij);
     public:
         Matrix();
         Matrix(int nx, int ny);

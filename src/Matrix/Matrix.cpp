@@ -63,12 +63,39 @@ Matrix* Matrix::getTransposedMatrix(){
     return matrix;
 };
 
+Matrix* Matrix::getMatrixWithout(int ii, int ij){
+    Matrix* matrix = new Matrix(nx-1, ny-1);
+    for(int i=0;i<ny;i++){
+        int iin = i;
+        if(i == ii)
+            continue;
+        else if(i > ii)
+            iin--;
+        for(int j=0;j<nx;j++){
+            int jin = j;
+            if(j == ij)
+                continue;
+            else if(j > ij)
+                jin--;
+            
+            matrix->setValue(iin, jin, tab[i][j]);
+        }
+    }
+    return matrix;
+};
+
 float Matrix::getDet(char method){
     //validation
     if(nx != ny){
         std::cerr<<"Matrix::getDet() => Matrix size is invalid (nx="<<nx<<", ny="<<ny<<")."<<std::endl;
         return NULL;
     }
+
+    //trivial case
+    if(nx == 1)
+        return tab[0][0];
+
+    float d = 0;
 
     //Gauss
     if(method == 'g'){
@@ -77,14 +104,20 @@ float Matrix::getDet(char method){
 
     //definition
     else if(method == 'd'){
-
+        //row -> 0
+        for(int j=0;j<nx;j++){
+            if(j % 2 == 0)
+                d += tab[0][j] * getMatrixWithout(0, j)->getDet('d');
+            else
+                d -= tab[0][j] * getMatrixWithout(0, j)->getDet('d');
+        }
     }
     //error message -> invalid argument
     else{
         std::cerr<<"Matrix::getDet() => Argument method = '"<<method<<"' is invalid, use 'g' or 'd'."<<std::endl;
         return NULL;
     }
-    return 1;
+    return d;
 };
 
 

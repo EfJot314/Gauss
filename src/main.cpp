@@ -37,15 +37,13 @@ int main()
 
     v->show("Input vector:");
 
+    //transpose given vector
     v = v->getTransposedMatrix();
     v->show("Transposed vector:");
 
 
-
-
-
-
     float d = m->getDet('d');
+    cout << d << endl;
 
 
 

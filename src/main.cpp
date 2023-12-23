@@ -47,7 +47,9 @@ int main()
 
 
     //transpose given vector
-    v = v->getTransposedMatrix();
+    Matrix* nv = v->getTransposedMatrix();
+    delete v;
+    v = nv;
     v->show("Transposed vector:");
 
     //get det using Gauss method

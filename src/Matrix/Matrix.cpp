@@ -14,9 +14,9 @@ Matrix::Matrix(int nx, int ny){
 Matrix::~Matrix(){
     //free memory
     for(int i=0;i<nx;i++){
-        free(tab[i]);
+        delete tab[i];
     }
-    free(tab);
+    delete tab;
 };
 
 void Matrix::setValue(int i, int j, float value){

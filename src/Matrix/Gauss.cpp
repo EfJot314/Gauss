@@ -55,7 +55,7 @@ Gauss::Gauss(Matrix* matrix){
 };
 
 Gauss::Gauss(Matrix* matrix, Matrix* vector){
-    v = vector;
+    v = NULL;
     //add vector to matrix
     m = matrix->addColumns(vector);
 };
@@ -101,20 +101,19 @@ void Gauss::threadElimination(){
 
 
     //values from A
-    float** valA = (float**)malloc(ny*sizeof(float));
+    float** valA = new float*[ny];
     for(int i=0;i<ny;i++)
-        valA[i] = (float*)calloc(ny, sizeof(float));
+        valA[i] = new float[ny];
 
     //values from B
-    float*** valB = (float***)malloc(ny*sizeof(float**));
+    float*** valB = new float**[ny];
     for(int i=0;i<ny;i++){
-        valB[i] = (float**)malloc(ny*sizeof(float*));
+        valB[i] = new float*[ny];
         for(int j=0;j<ny;j++)
-            valB[i][j] = (float*)calloc(nx, sizeof(float));
+            valB[i][j] = new float[nx];
     }
 
     
-
     //creating threads
     for(int i1=0;i1<ny;i1++){
         for(int i2=i1+1;i2<ny;i2++){
@@ -133,10 +132,10 @@ void Gauss::threadElimination(){
                 A[i1][i2].join();
             }
             for(int j=0;j<nx;j++){
-                while(B[i1][i2][j].joinable()){
+                if(B[i1][i2][j].joinable()){
                     B[i1][i2][j].join();
                 }
-                while(C[i1][i2][j].joinable()){
+                if(C[i1][i2][j].joinable()){
                     C[i1][i2][j].join();
                 }
             }
@@ -155,18 +154,19 @@ void Gauss::toIdentityMatrix(){
         }
     }
 
+    //creating 1's on diagonal
     for(int i=0;i<ny;i++)
         m->multiplicateRow(i, 1/m->getValue(i, i));
 };
 
 Matrix* Gauss::getMatrix(){
-    // if(v == NULL)
-    //     v = m->popLastColumn();
+    if(v == NULL)
+        v = m->popLastColumn();
     return m;
 };
 
 Matrix* Gauss::getVector(){
-    // if(v == NULL)
+    if(v == NULL)
         v = m->popLastColumn();
     return v;
 };

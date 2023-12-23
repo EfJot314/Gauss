@@ -4,6 +4,7 @@
         "numbers": "cpp",
         "new": "cpp",
         "ostream": "cpp",
-        "cstdlib": "cpp"
+        "cstdlib": "cpp",
+        "iosfwd": "cpp"
     }
 }

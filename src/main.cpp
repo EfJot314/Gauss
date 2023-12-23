@@ -42,6 +42,10 @@ int main()
 
     v->show("Input vector:");
 
+    //close file
+    file.close();
+
+
     //transpose given vector
     v = v->getTransposedMatrix();
     v->show("Transposed vector:");
@@ -54,6 +58,10 @@ int main()
     // g.classicElimination();
     g.threadElimination();
 
+    //free memory
+    delete m;
+    delete v;
+
     m = g.getMatrix();
     v = g.getVector();
 
@@ -63,11 +71,20 @@ int main()
     g = Gauss(m, v);
     g.toIdentityMatrix();
 
+    //free memory
+    delete m;
+    delete v;
+
     m = g.getMatrix();
     v = g.getVector();
 
     m->show("Indentity matrix:");
     v->show("Vector:");
+
+
+    //free memory
+    delete m;
+    delete v;
 
     return 0;
 }

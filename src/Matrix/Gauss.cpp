@@ -9,50 +9,37 @@ using namespace std;
 
 
 
-void funA(float** valA, float*** valB, float*** valC, int i1, int i2, Matrix* m){
+int funA(float** valA, float*** valB, int i1, int i2, Matrix* m, thread** A, thread*** B, thread*** C){
     //waiting
-    while(true){
-        if(i1 == 0)
-            break;
-        else if(valC[i1-1][i1][i1] > 10 && valC[i1-1][i2][i2] > 10)
-            break;
+    if(i1 > 0){
+        while(C[i1-1][i1][i1].joinable()){} 
+        while(C[i1-1][i2][i1].joinable()){}
     }
     //doing
     valA[i1][i2] = m->getValue(i2, i1) / m->getValue(i1, i1);
+    return 0;
 };
 
-void funB(float** valA, float*** valB, float*** valC, int i1, int i2, int j, Matrix* m){
+int funB(float** valA, float*** valB, int i1, int i2, int j, Matrix* m, thread** A, thread*** B, thread*** C){
     //waiting
-    while(true){
-        if(valA[i1][i2]*valA[i1][i2] > 0.0000001f){
-            if(j <= i1)
-                break;
-            if(i1 == 0)
-                break;
-            if(valC[i1-1][i1][j] > 10)
-                break;
-        }
+    while(A[i1][i2].joinable()){}
+    if(j > i1 && i1 > 0){
+        while(C[i1-1][i2-1][j].joinable()){}
     }
     //doing
     valB[i1][i2][j] = m->getValue(i1, j) * valA[i1][i2];
+    return 0;
 };
 
-void funC(float** valA, float*** valB, float*** valC, int i1, int i2, int j, Matrix* m){
+int funC(float** valA, float*** valB, int i1, int i2, int j, Matrix* m, thread** A, thread*** B, thread*** C){
     //waiting
-    while(true){
-        if(valB[i1][i2][j]*valB[i1][i2][j] > 0.000000001f){
-            if(j <= i1)
-                break;
-            if(i1 == 0)
-                break;
-            else if(valC[i1-1][i2][j] > 10)
-                break;
-        }
+    while(B[i1][i2][j].joinable()){}
+    if(j > i1 && i1 > 0){
+        while(C[i1-1][i2][j].joinable()){}
     }
     //doing
-    //TODO -> not working properly
     m->setValue(i2, j, m->getValue(i2, j) - valB[i1][i2][j]);
-    valC[i1][i2][j] = 100;  //for controlling if it is done
+    return 0;
 };
 
 
@@ -68,9 +55,9 @@ Gauss::Gauss(Matrix* matrix){
 };
 
 Gauss::Gauss(Matrix* matrix, Matrix* vector){
-    v = vector;
+    v = NULL;
     //add vector to matrix
-    m = matrix->addColumns(v);
+    m = matrix->addColumns(vector);
 };
 
 Gauss::~Gauss(){};
@@ -96,15 +83,26 @@ void Gauss::threadElimination(){
     int nx = m->getSizeX();
     int ny = m->getSizeY();
 
-    cout << nx << " " << ny << endl;
-
     
     //A -> finding multipliers
-    thread* A[ny][ny];
+    thread** A = new thread*[ny];
+    for(int i=0;i<ny;i++)
+        A[i] = new thread[ny];
     //B -> multiplying elements
-    thread* B[ny][ny][nx];
+    thread*** B = new thread**[ny];
+    for(int i=0;i<ny;i++){
+        B[i] = new thread*[ny];
+        for(int j=0;j<ny;j++)
+            B[i][j] = new thread[nx];
+    }
     //C -> subtracting elements
-    thread* C[ny][ny][nx];
+    thread*** C = new thread**[ny];
+    for(int i=0;i<ny;i++){
+        C[i] = new thread*[ny];
+        for(int j=0;j<ny;j++)
+            C[i][j] = new thread[nx];
+    }
+
 
     //values from A
     float** valA = (float**)malloc(ny*sizeof(float));
@@ -119,23 +117,32 @@ void Gauss::threadElimination(){
             valB[i][j] = (float*)calloc(nx, sizeof(float));
     }
 
-    //values from C -> only for controlling if thread has ended
-    float*** valC = (float***)malloc(ny*sizeof(float**));
-    for(int i=0;i<ny;i++){
-        valC[i] = (float**)malloc(ny*sizeof(float*));
-        for(int j=0;j<ny;j++)
-            valC[i][j] = (float*)calloc(nx, sizeof(float));
-    }
-
     
 
     //creating threads
-    for(int i1=0;i1<1;i1++){
+    for(int i1=0;i1<ny;i1++){
         for(int i2=i1+1;i2<ny;i2++){
-            A[i1][i2] = new thread(funA, valA, valB, valC, i1, i2, m);
+            A[i1][i2] = thread(funA, valA, valB, i1, i2, m, A, B, C);
             for(int j=0;j<nx;j++){
-                B[i1][i2][j] = new thread(funB, valA, valB, valC, i1, i2, j, m);
-                C[i1][i2][j] = new thread(funC, valA, valB, valC, i1, i2, j, m);
+                B[i1][i2][j] = thread(funB, valA, valB, i1, i2, j, m, A, B, C);
+                C[i1][i2][j] = thread(funC, valA, valB, i1, i2, j, m, A, B, C);
+            }
+        }
+    }
+
+    //waiting all for threads
+    for(int i1=0;i1<ny;i1++){
+        for(int i2=i1+1;i2<ny;i2++){
+            if(A[i1][i2].joinable()){
+                A[i1][i2].join();
+            }
+            for(int j=0;j<nx;j++){
+                while(B[i1][i2][j].joinable()){
+                    B[i1][i2][j].join();
+                }
+                while(C[i1][i2][j].joinable()){
+                    C[i1][i2][j].join();
+                }
             }
         }
     }
@@ -144,11 +151,14 @@ void Gauss::threadElimination(){
 };
 
 Matrix* Gauss::getMatrix(){
+    if(v == NULL)
+        v = m->popLastColumn();
     return m;
 };
 
 Matrix* Gauss::getVector(){
-    v = m->getLastColumn();
+    if(v == NULL)
+        v = m->popLastColumn();
     return v;
 };
 

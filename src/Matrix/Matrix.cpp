@@ -6,9 +6,9 @@ Matrix::Matrix(){};
 Matrix::Matrix(int nx, int ny){
     this->nx = nx;
     this->ny = ny;
-    tab = (float**)malloc(ny*sizeof(float*));
+    tab = new float*[ny];
     for(int i=0;i<ny;i++)
-        tab[i] = (float*)calloc(nx, sizeof(float));
+        tab[i] = new float[nx];
 };
 
 Matrix::~Matrix(){
@@ -94,13 +94,30 @@ Matrix* Matrix::addColumns(Matrix* v){
     return nm;
 };
 
-Matrix* Matrix::getLastColumn(){
+Matrix* Matrix::popLastColumn(){
+    //getting last column
     Matrix* v = new Matrix(1, ny);
     for(int i=0;i<ny;i++){
         v->setValue(i, 0, tab[i][ny-1]);
     }
+
+    //removing last column
+    float** newTab = new float*[ny];
+    for(int i=0;i<ny;i++){
+        newTab[i] = new float[nx-1];
+        for(int j=0;j<nx-1;j++)
+            newTab[i][j] = tab[i][j];
+        delete tab[i];
+    }
+    delete tab;
+
+    tab = newTab;
+    nx--;
+    
+    //return
     return v;
 };
+
 
 Matrix* Matrix::getMatrixWithout(int ii, int ij){
     Matrix* matrix = new Matrix(nx-1, ny-1);
@@ -127,7 +144,7 @@ float Matrix::getDet(char method){
     //validation
     if(nx != ny){
         std::cerr<<"Matrix::getDet() => Matrix size is invalid (nx="<<nx<<", ny="<<ny<<")."<<std::endl;
-        return NULL;
+        return *(float*)NULL;
     }
 
     //trivial case
@@ -140,7 +157,7 @@ float Matrix::getDet(char method){
     if(method == 'g'){
         d = 1.0f;
         Gauss g(this);
-        g.classicElimination();
+        g.threadElimination();
         for(int i=0;i<nx;i++)
             d *= tab[i][i];
 
@@ -159,7 +176,7 @@ float Matrix::getDet(char method){
     //error message -> invalid argument
     else{
         std::cerr<<"Matrix::getDet() => Argument method = '"<<method<<"' is invalid, use 'g' or 'd'."<<std::endl;
-        return NULL;
+        return *(float*)NULL;
     }
 
     //return value

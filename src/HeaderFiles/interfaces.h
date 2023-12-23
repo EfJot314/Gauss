@@ -19,7 +19,7 @@ class Matrix{
         float getValue(int i, int j);
         Matrix* getTransposedMatrix();
         Matrix* addColumns(Matrix* v);
-        Matrix* getLastColumn();
+        Matrix* popLastColumn();
         void show(std::string description);
         float getDet(char method);  //g - Gauss OR d - definition
 };

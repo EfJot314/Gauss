@@ -1,6 +1,11 @@
+#include <thread>
+
 #include "./HeaderFiles/interfaces.h"
 
+
+
 using namespace std;
+
 
 int main()
 {
@@ -49,10 +54,13 @@ int main()
     // g.classicElimination();
     g.threadElimination();
 
+    m = g.getMatrix();
+    v = g.getVector();
+
     m->show("Matrix after elimination:");
     v->show("Vector after elimination:");
 
-    d = m->getDet('d');
+    d = m->getDet('g');
     cout << "Gauss det: " << d << endl;
 
 

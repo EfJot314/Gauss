@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "thread": "cpp"
+        "thread": "cpp",
+        "numbers": "cpp",
+        "new": "cpp"
     }
 }

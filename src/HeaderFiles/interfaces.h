@@ -14,6 +14,7 @@ class Matrix{
         ~Matrix();
         void setValue(int i, int j, float value);
         void subtractRowsWithMultiplicator(int i1, int i2, float value);
+        void multiplicateRow(int i, float value);
         int getSizeX();
         int getSizeY();
         float getValue(int i, int j);
@@ -37,6 +38,7 @@ class Gauss{
         ~Gauss();
         void classicElimination();
         void threadElimination();
+        void toIdentityMatrix();
         Matrix* getMatrix();
         Matrix* getVector();
 

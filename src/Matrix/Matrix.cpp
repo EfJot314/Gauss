@@ -34,6 +34,14 @@ void Matrix::subtractRowsWithMultiplicator(int i1, int i2, float value){
             tab[i2][j] -= tab[i1][j] * value;
 };
 
+void Matrix::multiplicateRow(int i, float value){
+    if(i < 0 || i >= ny)
+        std::cerr<<"Matrix::multiplicateRow() => Invalid index."<<std::endl;
+    else    
+        for(int j=0;j<nx;j++)
+            tab[i][j] *= value;
+};
+
 float Matrix::getValue(int i, int j){
     return tab[i][j];
     if(i >=0 && i < ny && j >= 0 && j < nx)
@@ -98,7 +106,7 @@ Matrix* Matrix::popLastColumn(){
     //getting last column
     Matrix* v = new Matrix(1, ny);
     for(int i=0;i<ny;i++){
-        v->setValue(i, 0, tab[i][ny-1]);
+        v->setValue(i, 0, tab[i][nx-1]);
     }
 
     //removing last column

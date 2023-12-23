@@ -46,9 +46,9 @@ int main()
     v = v->getTransposedMatrix();
     v->show("Transposed vector:");
 
+    //get det using Gauss method
+    // cout<<"Det m = "<<m->getDet('g')<<endl;
 
-    float d = m->getDet('d');
-    cout << "Definition det: " << d << endl;
 
     Gauss g(m, v);
     // g.classicElimination();
@@ -60,10 +60,14 @@ int main()
     m->show("Matrix after elimination:");
     v->show("Vector after elimination:");
 
-    d = m->getDet('g');
-    cout << "Gauss det: " << d << endl;
+    g = Gauss(m, v);
+    g.toIdentityMatrix();
 
+    m = g.getMatrix();
+    v = g.getVector();
 
+    m->show("Indentity matrix:");
+    v->show("Vector:");
 
     return 0;
 }

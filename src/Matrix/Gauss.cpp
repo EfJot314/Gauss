@@ -55,7 +55,7 @@ Gauss::Gauss(Matrix* matrix){
 };
 
 Gauss::Gauss(Matrix* matrix, Matrix* vector){
-    v = NULL;
+    v = vector;
     //add vector to matrix
     m = matrix->addColumns(vector);
 };
@@ -70,10 +70,6 @@ void Gauss::classicElimination(){
         for(int i2=i1+1;i2<ny;i2++){
             float multiplicator = m->getValue(i2, i1) / m->getValue(i1, i1);
             m->subtractRowsWithMultiplicator(i1, i2, multiplicator);
-            //if vector is also given
-            if(v != NULL){
-                v->subtractRowsWithMultiplicator(i1, i2, multiplicator);
-            }
             m->setValue(i2, i1, 0);     //to avoid approximation errors
         }
     }
@@ -146,18 +142,31 @@ void Gauss::threadElimination(){
             }
         }
     }
+};
 
+void Gauss::toIdentityMatrix(){
+    int nx = m->getSizeX();
+    int ny = m->getSizeY();
+    for(int i1=ny-1;i1>0;i1--){
+        for(int i2=i1-1;i2>=0;i2--){
+            float multiplicator = m->getValue(i2, i1) / m->getValue(i1, i1);
+            m->subtractRowsWithMultiplicator(i1, i2, multiplicator);
+            m->setValue(i2, i1, 0);     //to avoid approximation errors
+        }
+    }
 
+    for(int i=0;i<ny;i++)
+        m->multiplicateRow(i, 1/m->getValue(i, i));
 };
 
 Matrix* Gauss::getMatrix(){
-    if(v == NULL)
-        v = m->popLastColumn();
+    // if(v == NULL)
+    //     v = m->popLastColumn();
     return m;
 };
 
 Matrix* Gauss::getVector(){
-    if(v == NULL)
+    // if(v == NULL)
         v = m->popLastColumn();
     return v;
 };

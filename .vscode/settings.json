@@ -2,6 +2,7 @@
     "files.associations": {
         "thread": "cpp",
         "numbers": "cpp",
-        "new": "cpp"
+        "new": "cpp",
+        "ostream": "cpp"
     }
 }

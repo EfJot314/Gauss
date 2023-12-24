@@ -36,6 +36,7 @@ class Matrix{
 
 class Gauss{
     private:
+        bool merged = false;
         Matrix* m;
         Matrix* v;
     public:
@@ -48,7 +49,6 @@ class Gauss{
         void toIdentityMatrix();
         Matrix* getMatrix();
         Matrix* getVector();
-
 };
 
 

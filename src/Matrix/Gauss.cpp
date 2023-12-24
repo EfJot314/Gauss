@@ -55,6 +55,7 @@ Gauss::Gauss(Matrix* matrix){
 };
 
 Gauss::Gauss(Matrix* matrix, Matrix* vector){
+    merged = true;
     v = NULL;
     //add vector to matrix
     m = matrix->addColumns(vector);
@@ -160,14 +161,18 @@ void Gauss::toIdentityMatrix(){
 };
 
 Matrix* Gauss::getMatrix(){
-    if(v == NULL)
+    if(merged){
         v = m->popLastColumn();
+        merged = false;
+    }
     return m;
 };
 
 Matrix* Gauss::getVector(){
-    if(v == NULL)
+    if(merged){
         v = m->popLastColumn();
+        merged = false;
+    }
     return v;
 };
 

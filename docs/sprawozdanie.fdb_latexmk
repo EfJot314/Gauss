@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1703414173 "/home/filipjedrzejewski/cpp/Gauss/docs/sprawozdanie.tex" "sprawozdanie.pdf" "sprawozdanie" 1703414176 0
-  "/home/filipjedrzejewski/cpp/Gauss/docs/sprawozdanie.tex" 1703414169 8179 0e527422f3ea0e5108f668bad74b146a ""
+["pdflatex"] 1703414770 "/home/filipjedrzejewski/cpp/Gauss/docs/sprawozdanie.tex" "sprawozdanie.pdf" "sprawozdanie" 1703414773 0
+  "/home/filipjedrzejewski/cpp/Gauss/docs/sprawozdanie.tex" 1703414769 8498 182ba6ab9a77bf02731302ebccea8f88 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -84,9 +84,9 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1703407247 4602615 ac1019cb4c4ba39710c2cf7f752b378d ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1703406885 7872022 2dbb63bdf5418f1da8b130542d6cac05 ""
   "graf.png" 1703411301 70657 450879f573c7035341c0b1b982ed543e ""
-  "sprawozdanie.aux" 1703414175 2818 f3bf705ae32cfb52b3a47b9561c902a2 "pdflatex"
-  "sprawozdanie.out" 1703414175 2417 e5b60410e1b8b3471b4f4ffaca535fc5 "pdflatex"
-  "sprawozdanie.tex" 1703414169 8179 0e527422f3ea0e5108f668bad74b146a ""
+  "sprawozdanie.aux" 1703414772 2945 53d94b2cc24f2dc5df1749804985cc49 "pdflatex"
+  "sprawozdanie.out" 1703414772 2535 17741533b7210f68f459bcbbeb87e7d5 "pdflatex"
+  "sprawozdanie.tex" 1703414769 8498 182ba6ab9a77bf02731302ebccea8f88 ""
   (generated)
   "sprawozdanie.aux"
   "sprawozdanie.log"
